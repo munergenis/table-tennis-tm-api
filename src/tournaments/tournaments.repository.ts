@@ -28,12 +28,11 @@ export class TournamentsRepository {
     if (tournamentIndex < 0)
       return new NotFoundException(`Tournament #${id} not found`)
 
-    const { name, date } = updateTournamentDto
-
     this.tournaments[tournamentIndex] = {
       ...this.tournaments[tournamentIndex],
       ...updateTournamentDto,
     }
+
     return this.tournaments[tournamentIndex]
   }
 }
