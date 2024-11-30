@@ -16,7 +16,7 @@ import { TournamentMode } from 'src/tournaments/entities/tournament.entity'
 @ValidatorConstraint({ name: 'IsMultipleOfFour', async: false })
 class IsMultipleOfFour implements ValidatorConstraintInterface {
   validate(players: any[]) {
-    return players.length % 4 === 0
+    if (players) return players.length % 4 === 0
   }
 
   defaultMessage() {
@@ -50,8 +50,8 @@ export class CreateTournamentDto {
 
   @IsArray()
   @ArrayMinSize(8, { message: 'There must be at least 8 players' })
-  @Validate(IsMultipleOfFour)
   @ValidateNested({ each: true })
+  @Validate(IsMultipleOfFour)
   @Type(() => PlayerInput)
   playersInput: PlayerInput[]
 }

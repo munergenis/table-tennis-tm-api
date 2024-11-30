@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { BadRequestException, Injectable } from '@nestjs/common'
 import { CreateTournamentDto } from './dto/create-tournament.dto'
 import { UpdateTournamentDto } from './dto/update-tournament.dto'
 import { Tournament } from 'src/tournaments/entities/tournament.entity'
@@ -7,13 +7,17 @@ import { TournamentsRepository } from 'src/tournaments/tournaments.repository'
 
 @Injectable()
 export class TournamentsService {
-  constructor(private tournamentsRepository: TournamentsRepository) {}
+  constructor(private tournamentsRepository: TournamentsRepository) { }
 
   create(createTournamentDto: CreateTournamentDto) {
     const newTournament: Tournament = generateNewTournament(createTournamentDto)
 
-    // Generar nou torneig
-    console.log(this.tournamentsRepository.create(newTournament))
+    // Enviar nou torneig a la base de dades
+    // TODO - Quan faci la crida a la DB real, envoltar en trycatch
+    this.tournamentsRepository.create(newTournament)
+
+    // TODO - Revisar què passa si es genera un nou torneig i es puja a la DB,
+    // però després falla la generació de partits o jusgadors?
 
     // TODO - Match Service? - Generar Partits primera ronda
     //// TODO - Match Repository - Crear Partits
@@ -21,28 +25,22 @@ export class TournamentsService {
     // TODO - Player Service? - Generar Jugadors del torneig
     //// TODO - Player Repository - Crear Jugadors
 
-    return 'This action adds a new tournament'
+    return newTournament
   }
 
   update(id: string, updateTournamentDto: UpdateTournamentDto) {
     // TODO - Provar
-    console.log(
-      this.tournamentsRepository.findAndUpdate(id, updateTournamentDto),
-    )
-
-    return `This action updates a #${id} tournament`
+    return this.tournamentsRepository.findAndUpdate(id, updateTournamentDto)
   }
 
   findAll() {
     // TODO - Provar
-    console.log(this.tournamentsRepository.findAll())
-    return 'This action retruns all tournaments'
+    return this.tournamentsRepository.findAll()
   }
 
   findOne(id: string) {
     // TODO - Provar
-    console.log(this.tournamentsRepository.findOne(id))
-    return `This action returns a #${id} tournament`
+    return this.tournamentsRepository.findOne(id)
   }
 
   // TODO - Definir propietat visible a tournament entity (a front serà opció archivar)

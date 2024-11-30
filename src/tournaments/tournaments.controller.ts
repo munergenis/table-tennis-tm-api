@@ -14,7 +14,7 @@ import { UpdateTournamentDto } from './dto/update-tournament.dto'
 
 @Controller('tournaments')
 export class TournamentsController {
-  constructor(private readonly tournamentsService: TournamentsService) {}
+  constructor(private readonly tournamentsService: TournamentsService) { }
 
   @Post()
   create(@Body() createTournamentDto: CreateTournamentDto) {
@@ -30,7 +30,6 @@ export class TournamentsController {
   findOne(@Param('id') id: string) {
     return this.tournamentsService.findOne(id)
   }
-
   @Patch(':id')
   update(
     @Param('id') id: string,

@@ -8,11 +8,14 @@ export class TournamentsRepository {
 
   create(tournament: Tournament) {
     this.tournaments.push(tournament)
-    return tournament
   }
 
   findOne(id: string) {
-    return this.tournaments.find((t) => t.id === id)
+    const tournament = this.tournaments.find((t) => t.id === id)
+
+    if (!tournament) return new NotFoundException(`Tournament #${id} not found`)
+
+    return tournament
   }
 
   findAll() {
@@ -24,6 +27,8 @@ export class TournamentsRepository {
 
     if (tournamentIndex < 0)
       return new NotFoundException(`Tournament #${id} not found`)
+
+    const { name, date } = updateTournamentDto
 
     this.tournaments[tournamentIndex] = {
       ...this.tournaments[tournamentIndex],

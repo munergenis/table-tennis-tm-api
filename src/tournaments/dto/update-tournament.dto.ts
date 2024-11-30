@@ -3,7 +3,7 @@ import { CreateTournamentDto } from './create-tournament.dto'
 import { IsDate, IsNotEmpty, IsOptional, IsString } from 'class-validator'
 import { Type } from 'class-transformer'
 
-export class UpdateTournamentDto extends PartialType(CreateTournamentDto) {
+export class UpdateTournamentDto {
   @IsOptional()
   @IsString()
   @IsNotEmpty()
