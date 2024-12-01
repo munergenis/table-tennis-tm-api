@@ -1,5 +1,7 @@
+import { CreatePlayerDto } from 'src/players/dto/create-player.dto'
+import { Player } from 'src/players/entities/player.entity'
 import { CreateTournamentDto } from 'src/tournaments/dto/create-tournament.dto'
-import { TournamentStatus } from 'src/tournaments/entities/tournament.entity'
+import { Tournament, TournamentStatus } from 'src/tournaments/entities/tournament.entity'
 
 function getMaxQualificationRounds(numOfPlayers: number) {
   return Math.floor(Math.log2(numOfPlayers))
@@ -24,7 +26,7 @@ function getMaxEliminationRounds(numOfPlayers: number) {
 
 export function generateNewTournament(
   createTournamentDto: CreateTournamentDto,
-) {
+): Tournament {
   const numOfPlayers = createTournamentDto.playersInput.length
   return {
     id: crypto.randomUUID(),

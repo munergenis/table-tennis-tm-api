@@ -1,10 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePlayerDto } from './dto/create-player.dto';
 import { UpdatePlayerDto } from './dto/update-player.dto';
+import { Player } from './entities/player.entity';
 
 @Injectable()
 export class PlayersRepository {
-  create(createPlayerDto: CreatePlayerDto) {
+  players = []
+  create(player: Player) {
+    this.players.push(player)
     return 'This action adds a new player';
   }
 
