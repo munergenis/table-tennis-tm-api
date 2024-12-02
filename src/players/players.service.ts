@@ -1,16 +1,24 @@
 import { Injectable } from '@nestjs/common';
-import { CreatePlayerDto } from './dto/create-player.dto';
 import { UpdatePlayerDto } from './dto/update-player.dto';
 import { PlayersRepository } from './players.repository';
 import { generateNewPlayer } from './utils/utils';
+import { Player, PlayerInput } from './entities/player.entity';
 
 @Injectable()
 export class PlayersService {
   constructor(private playersRepository: PlayersRepository) { }
-  create(tournamentId: string, playerNumber: number, createPlayerDto: CreatePlayerDto) {
-    const newPlayer = generateNewPlayer(tournamentId, playerNumber, createPlayerDto)
+  createPlayers(tournamentId: string, playersInput: PlayerInput[]) {
+    const playersList: Player[] = []
+    const playersLength = playersInput.length
 
-    this.playersRepository.create(newPlayer)
+    for (let i = 0; i < playersLength; i++) {
+      const playerNumber = i + 1
+      const newPlayer = generateNewPlayer(tournamentId, playerNumber, playersInput[i])
+      playersList.push(newPlayer)
+    }
+
+
+    this.playersRepository.createPlayers(playersList)
 
     return 'This action adds a new player';
   }

@@ -4,10 +4,15 @@ import { UpdateTournamentDto } from './dto/update-tournament.dto'
 import { Tournament } from 'src/tournaments/entities/tournament.entity'
 import { generateNewTournament } from 'src/tournaments/utils/utils'
 import { TournamentsRepository } from 'src/tournaments/tournaments.repository'
+import { PlayersService } from 'src/players/players.service'
+import { PlayerInput } from 'src/players/entities/player.entity'
 
 @Injectable()
 export class TournamentsService {
-  constructor(private tournamentsRepository: TournamentsRepository) { }
+  constructor(
+    private tournamentsRepository: TournamentsRepository,
+    private playersService: PlayersService,
+  ) { }
 
   create(createTournamentDto: CreateTournamentDto) {
     const newTournament: Tournament = generateNewTournament(createTournamentDto)
@@ -23,7 +28,9 @@ export class TournamentsService {
     //// TODO - Match Repository - Crear Partits
 
     // TODO - Player Service? - Generar Jugadors del torneig
-    //// TODO - Player Repository - Crear Jugadors
+    const playersInput = createTournamentDto.playersInput
+
+    this.playersService.createPlayers(newTournament.id, playersInput)
 
     return newTournament
   }

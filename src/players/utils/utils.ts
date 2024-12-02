@@ -1,12 +1,12 @@
 import { CreatePlayerDto } from "../dto/create-player.dto";
-import { Player } from "../entities/player.entity";
+import { Player, PlayerInput } from "../entities/player.entity";
 
-export function generateNewPlayer(tournamentId: string, playerNumber: number, createPlayerDto: CreatePlayerDto): Player {
+export function generateNewPlayer(tournamentId: string, playerNumber: number, playerInput: PlayerInput): Player {
   return {
     id: crypto.randomUUID(),
     tournamentId,
-    name: createPlayerDto.name,
-    club: createPlayerDto.club,
+    name: playerInput.playerName,
+    club: playerInput.playerClub,
     playerNumber,
     initialOrder: null,
   }

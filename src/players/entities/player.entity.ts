@@ -1,3 +1,8 @@
+export class PlayerInput {
+  playerName: string
+  playerClub: string
+}
+
 export class Player {
   id: string
   tournamentId: string
